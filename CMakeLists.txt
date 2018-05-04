@@ -6,6 +6,7 @@ find_package(Imagine REQUIRED)
 
 project(NinJump)
 add_executable(NinJump main.cpp
-               image.h image.cpp)
+               Ninja.cpp Ninja.h
+               Obst.cpp Obst.h)
 
 ImagineUseModules(NinJump Graphics)

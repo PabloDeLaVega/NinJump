@@ -8,7 +8,7 @@ class Obstacle {
     int typ; // mur, ennemi, Luc Dormieux, etc.
 public :
     //Constructeur
-    Obstacle Obstacle(int c, int lr, int l, int w, int t);
+    Obstacle(int c, int lr, int l, int w, int t);
 
     //Accesseurs
     int getY();
@@ -23,4 +23,4 @@ public :
     void setLength(int l);
     void setWidth(int w);
     void setType(int t);
-}
+};

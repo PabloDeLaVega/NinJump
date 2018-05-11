@@ -20,6 +20,20 @@ void Ninja::setX(int x){
         state=1;
 }
 
-void Ninja::isAlive(){
-    return state!=4
+bool Ninja::isAlive(){
+    return state!=4;
 }
+
+Ninja::Ninja(int x, int s){
+    state=s;
+    coord=x;
+}
+
+int Ninja::width(){
+    return Width;
+}
+
+int Ninja::height(){
+    return Height;
+}
+

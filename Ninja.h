@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Imagine/Graphics.h>
+using namespace Imagine;
 
 class Ninja {
     int coord; // coordonnee selon x
@@ -24,5 +25,4 @@ public :
 
     //Methodes
     bool isAlive();
-    void aff(int x, Window W);
 };

@@ -1,4 +1,7 @@
 #include "Ninja.h"
+#include <Imagine/Graphics.h>
+
+using namespace Imagine;
 
 int Ninja::getState(){
     return state;
@@ -21,7 +24,7 @@ void Ninja::setX(int x){
 }
 
 bool Ninja::isAlive(){
-    return state!=4;
+    return state!=3;
 }
 
 Ninja::Ninja(int x, int s){
@@ -36,4 +39,3 @@ int Ninja::width(){
 int Ninja::height(){
     return Height;
 }
-

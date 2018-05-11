@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
                 ninja.setState(1);
         }
         //        Sinon si touche espace et Ninja à gauche(0) :
-        else if (key==SPACEBAR && ninja.getState()==0)
+        else if (key==KEY_ && ninja.getState()==0)
             //            Etat ninja = 21 (transition vers droite)
             ninja.setState(21);
         else if (key==SPACEBAR && ninja.getState()==1)

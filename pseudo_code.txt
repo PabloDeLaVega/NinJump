@@ -1,4 +1,4 @@
-Initialiser graphismes (Fenetre + Ninja + Mur)
+Initialiser graphismes (Fenetre (200x600) + Ninja + Mur)
 Score=0
 Tant que Ninja vivant (!=3):
 	Freeze (fct proportionnel à score avec paliers)
@@ -6,6 +6,7 @@ Tant que Ninja vivant (!=3):
 	animation perso (change photo Ninja, dépend de son état (transition ou course ou mort))
 	animation mur (descendre 1 px)
 	animation obstacle (descendre 1px)
+	génération obstacle (proba aléatoire, distance minimale entre deux obstacles proportionnelle à la vitesse)
 	Collision = test collision à la frame suivante
 	Si collision : 
 		Etat ninja = 3 (mort)

@@ -8,9 +8,6 @@ using namespace std;
 Ninja::Ninja(int x, int s){
     coord = x;
     state = s;
-    epaiss = 10;
-    taille = 20;
-    hauteur = 550;
 }
 
 void Ninja::AffichNinja(){
@@ -45,6 +42,14 @@ int Ninja::getX(){
     return coord;
 }
 
+int Ninja::width(){
+    return epaiss;
+}
+
+int Ninja::height(){
+    return taile;
+}
+
 void Ninja::setState(int s){
     state=s;
 }
@@ -58,5 +63,5 @@ void Ninja::setX(int x){
 }
 
 void Ninja::isAlive(){
-    return state!=4
+    return state!=3
 }

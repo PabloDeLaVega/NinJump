@@ -7,19 +7,19 @@ using namespace std;
 
 void Obstacle::AffichObstacle(){
     if (side==0){
-        fillRect(20,coord,len,wid,RED);
+        fillRect(0,coord,len,wid,GREEN);
     }
     if (side==1){
-        fillRect(180-len,coord,len,wid,RED);
+        fillRect(200-len,coord,len,wid,GREEN);
     }
 }
 
 void Obstacle::EffaceObstacle(){
     if (side==0){
-        fillRect(20,coord,len,wid,WHITE);
+        fillRect(0,coord,len,wid,WHITE);
     }
     if (side==1){
-        fillRect(180-len,coord,len,wid,WHITE);
+        fillRect(200-len,coord,len,wid,WHITE);
     }
 }
 
@@ -29,12 +29,10 @@ void Obstacle::DeplaceObstable(int vitesse){
     AffichObstacle();
 }
 
-Obstacle::Obstacle(int lr, int l, int w, int t){
-    coord = -w;
+Obstacle::Obstacle(int lr, int t){
+    coord = 0;
     side = lr;
-    len = l;
-    wid = w;
-    typ = t;
+    setType(t);
     AffichObstacle();
 }
 
@@ -64,11 +62,14 @@ void Obstacle::setLR(int lr){
 
 void Obstacle::setType(int t){
     typ=t;
-    if (typ==0){
-        len=20;
-        wid=5;
+    if (typ==0){ //SA tu wALLA
+        len=40;
+        wid=20;
     }
-    //etc. pour chaque type
+    if (type==1){ //SHIELD
+        len=20;
+        wid=20;
+    }
 }
 
 void Obstacle::setY(int y){

@@ -2,6 +2,8 @@
 #include "Obst.h"
 #include <Imagine/Images.h>
 #include <Imagine/Graphics.h>
+#include <time.h>
+#include <queue>
 
 using namespace Imagine;
 using namespace std;
@@ -9,11 +11,16 @@ using namespace std;
 const int SPACEBAR=32;
 
 void Freeze(int score){
-    int sleep=(int)(-5*score+200);
-    if (sleep>1)
+    int sleep=(int)(-5*sqrt(score)+200);
+    if (sleep>9)
         milliSleep(sleep);
     else
-        milliSleep(1);
+        milliSleep(9);
+}
+
+void AfficheScore(int score){
+    fillRect(0, 0, 200, 20, BLACK);
+    drawString(50, 17, to_string(score), WHITE);
 }
 
 int Clavier() {
@@ -26,11 +33,19 @@ int Clavier() {
     return 0;
 }
 
-bool Collision(Ninja ninja){
-
+bool Collision(Ninja ninja, Obstacle obst, int WH, int WW){
+    if (obst.getY()+obst.width()>WH-ninja.height()){
+        if (obst.getLR()==0 && ninja.getX()<obst.length())
+            return true;
+        else if (obst.getLR()==1 && ninja.getX()+ninja.width()>WW-obst.length())
+            return true;
+    }
+    return false;
 }
 
 int main(int argc, char* argv[]) {
+
+    srand(time(NULL));
 
     //Initialisation
     const int WinWidth=200, WinHeight=600;
@@ -40,7 +55,12 @@ int main(int argc, char* argv[]) {
 
     int score=0;
     int key=0;
-    bool collision=false;
+    float coeff_vit=0.5;
+    int depl;
+    bool collision_shield=false;
+    bool collision_obst=false;
+    queue<Obstacle> Ob;
+    Obstacle shield=Obstacle(0, 0);
 
     //Boucle principale
     while (ninja.isAlive()){
@@ -48,22 +68,50 @@ int main(int argc, char* argv[]) {
         Freeze(score);
 //        Score++
         score++;
+        AfficheScore(score);
 //        animation perso (change photo Ninja, dépend de son état (transition ou course ou mort))
-//        animation mur (descendre 1 px)
 //        animation obstacle (descendre 1px)
+        for (int i=0; i<Ob.size(); i++){
+            Obstacle obst_temp=Ob.front();
+            Ob.pop();
+            obst_temp.EffaceObstacle();
+            obst_temp.setY(obst_temp.getY()+5);
+            obst_temp.AffichObstacle();
+            Ob.push(obst_temp);
+        }
 //        génération obstacle (proba aléatoire, distance minimale entre deux obstacles proportionnelle à la vitesse)
+        if (score%30==0){
+            Ob.push(Obstacle(rand()%2, 0));
+        }
+        if (score%200==0) {
+            shield=Obstacle(rand()%2, 1);
+        }
+        if (Ob.front().getY()>WinHeight){
+            Ob.pop();
+        }
+        if (shield.getY()>WinHeight){
+            shield.setType(0);
+        }
         key=Clavier();
 //        Collision = test collision à la frame suivante
-        collision=Collision(ninja);
-//        Si collision :
-        if (collision)
-//            Etat ninja = 3 (mort)
-            ninja.setState(3);
-//        Sinon si etat ninja = 20 ou 21 :
-        else if (ninja.getState()==20){
+        collision_obst=Collision(ninja, Ob.front(),WinHeight, WinWidth);
+        collision_shield=Collision(ninja, shield, WinHeight, WinWidth);
+        if (collision_shield)
+            ninja.setShield(true);
+        if (collision_obst){
+            if (ninja.getShield()){
+                ninja.setShield(false);
+                Ob.pop();
+            }
+            else
+                ninja.setState(3);
+        }
+        depl=max(int(coeff_vit*(-5*sqrt(score)+200)),1);
+//        Si etat ninja = 20 ou 21 :
+        if (ninja.getState()==20){
 //            cas 20 : décaler ninja de qq pixels vers gauche
             fillRect(ninja.getX(), WinHeight-ninja.height(), ninja.width(), ninja.height(), WHITE);
-            ninja.setX(ninja.getX()-5);
+            ninja.setX(max(ninja.getX()-depl, 0));
             fillRect(ninja.getX(), WinHeight-ninja.height(), ninja.width(), ninja.height(), RED);
             if (ninja.getX()+ninja.width()>=WinWidth)
                 ninja.setState(0);
@@ -71,7 +119,7 @@ int main(int argc, char* argv[]) {
         else if (ninja.getState()==21){
 //            cas 21 : ............................... droite
             fillRect(ninja.getX(), WinHeight-ninja.height(), ninja.width(), ninja.height(), WHITE);
-            ninja.setX(ninja.getX()+5);
+            ninja.setX(min(ninja.getX()+depl, WinWidth-ninja.width()));
             fillRect(ninja.getX(), WinHeight-ninja.height(), ninja.width(), ninja.height(), RED);
             if (ninja.getX()+ninja.width()>=WinWidth)
                 ninja.setState(1);
@@ -85,5 +133,9 @@ int main(int argc, char* argv[]) {
             ninja.setState(20);
 //            Etat Ninja = 20 (transition vers gauche)
     }
+    drawString(0, WinHeight/2, "C'est la piquette", RED, 20);
+    drawString(50, WinHeight/2 + 30, "Jack !", RED, 20);
+    click();
+    endGraphics();
     return 0;
 }

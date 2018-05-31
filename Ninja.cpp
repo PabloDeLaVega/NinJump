@@ -47,7 +47,7 @@ int Ninja::width(){
 }
 
 int Ninja::height(){
-    return taile;
+    return taille;
 }
 
 void Ninja::setState(int s){
@@ -62,6 +62,14 @@ void Ninja::setX(int x){
         state=1;
 }
 
-void Ninja::isAlive(){
-    return state!=3
+bool Ninja::isAlive(){
+    return state!=3;
+}
+
+bool Ninja::getShield(){
+    return shield;
+}
+
+void Ninja::setShield(bool s){
+    shield=s;
 }

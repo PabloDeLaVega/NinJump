@@ -15,6 +15,7 @@ public :
     int width();
     int height();
     bool getShield();
+    int getX();
 
     //Mutateurs
     void setX(int x);

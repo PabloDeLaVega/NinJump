@@ -8,7 +8,6 @@
 using namespace Imagine;
 using namespace std;
 
-const int SPACEBAR=32;
 
 void Freeze(int score){
     int sleep=(int)(-5*sqrt(score)+200);

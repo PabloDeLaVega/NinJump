@@ -1,9 +1,11 @@
 #include "Ninja.h"
-
+#include <time.h>
 #include <Imagine/Images.h>
 #include<Imagine/Graphics.h>
 using namespace Imagine;
 using namespace std;
+
+const int SPACEBAR=32;
 
 Ninja::Ninja(int x, int s){
     coord = x;
@@ -15,13 +17,13 @@ void Ninja::DeplacNinja(int dep,int Wh,int Ww){
     if (state==20){
 //            cas 20 : décaler ninja de qq pixels vers gauche
         fillRect(coord, Wh-taille, epaiss, taille, WHITE);
-        ninja.setX(max(coord-dep, 0));
+        coord = max(coord-dep, 0);
         fillRect(coord, Wh-taille, epaiss, taille, RED);
     }
     else if (state==21){
 //            cas 21 : ............................... droite
         fillRect(coord, Wh-taille, epaiss, taille, WHITE);
-        ninja.setX(max(coord+dep, 0));
+        coord = max(coord+dep, 0);
         fillRect(coord, Wh-taille, epaiss, taille, RED);
     }
 }
@@ -45,7 +47,7 @@ void Ninja::ActuStat(int Ww,int key){
               state = 20;
 //            Etat Ninja = 20 (transition vers gauche)
       }
-}
+
 
 int Ninja::width(){
     return epaiss;
@@ -57,6 +59,10 @@ int Ninja::height(){
 
 void Ninja::setState(int s){
     state=s;
+}
+
+int Ninja::getX(){
+    return coord;
 }
 
 void Ninja::setX(int x){

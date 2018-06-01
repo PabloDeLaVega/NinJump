@@ -9,7 +9,8 @@ class Obstacle {
 public :
     //Constructeur
     Obstacle(int lr, int t);
-    void DeplaceObstable(int vitesse);
+    void DeplaceObstable();
+
 
     //Accesseurs
     int getY();

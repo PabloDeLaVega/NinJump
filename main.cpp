@@ -93,9 +93,11 @@ int main(int argc, char* argv[]) {
             shield.setType(0);
         }
         key=Clavier();
-//        Collision = test collision à la frame suivante
+//        Test de collision à un obstacle
         collision_obst=Collision(ninja, Ob.front(),WinHeight, WinWidth);
+//        Test de collision à un bouclier
         collision_shield=Collision(ninja, shield, WinHeight, WinWidth);
+//        Collision = test collision à la frame suivante
         if (collision_shield)
             ninja.setShield(true);
         if (collision_obst){
@@ -107,31 +109,8 @@ int main(int argc, char* argv[]) {
                 ninja.setState(3);
         }
         depl=max(int(coeff_vit*(-5*sqrt(score)+200)),1);
-//        Si etat ninja = 20 ou 21 :
-        if (ninja.getState()==20){
-//            cas 20 : décaler ninja de qq pixels vers gauche
-            fillRect(ninja.getX(), WinHeight-ninja.height(), ninja.width(), ninja.height(), WHITE);
-            ninja.setX(max(ninja.getX()-depl, 0));
-            fillRect(ninja.getX(), WinHeight-ninja.height(), ninja.width(), ninja.height(), RED);
-            if (ninja.getX()+ninja.width()>=WinWidth)
-                ninja.setState(0);
-        }
-        else if (ninja.getState()==21){
-//            cas 21 : ............................... droite
-            fillRect(ninja.getX(), WinHeight-ninja.height(), ninja.width(), ninja.height(), WHITE);
-            ninja.setX(min(ninja.getX()+depl, WinWidth-ninja.width()));
-            fillRect(ninja.getX(), WinHeight-ninja.height(), ninja.width(), ninja.height(), RED);
-            if (ninja.getX()+ninja.width()>=WinWidth)
-                ninja.setState(1);
-        }
-        //        Sinon si touche espace et Ninja à gauche(0) :
-        else if (key==SPACEBAR && ninja.getState()==0)
-            //            Etat ninja = 21 (transition vers droite)
-            ninja.setState(21);
-        else if (key==SPACEBAR && ninja.getState()==1)
-//        Sinon si touche espace et Ninja à droite(1) :
-            ninja.setState(20);
-//            Etat Ninja = 20 (transition vers gauche)
+        ninja.DeplacNinja(depl,WinHeight,WinWidth);
+        ninja.ActuStat(WinWidth,key);
     }
     drawString(0, WinHeight/2, "C'est la piquette", RED, 20);
     drawString(50, WinHeight/2 + 30, "Jack !", RED, 20);

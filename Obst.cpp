@@ -23,9 +23,9 @@ void Obstacle::EffaceObstacle(){
     }
 }
 
-void Obstacle::DeplaceObstable(int vitesse){
+void Obstacle::DeplaceObstable(){
     EffaceObstacle();
-    coord += vitesse;
+    setY(getY()+5);
     AffichObstacle();
 }
 
@@ -66,7 +66,7 @@ void Obstacle::setType(int t){
         len=40;
         wid=20;
     }
-    if (type==1){ //SHIELD
+    if (typ==1){ //SHIELD
         len=20;
         wid=20;
     }

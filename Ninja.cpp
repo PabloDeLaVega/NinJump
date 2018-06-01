@@ -10,36 +10,41 @@ Ninja::Ninja(int x, int s){
     state = s;
 }
 
-void Ninja::AffichNinja(){
-    if (state==0){
-        fillRect(20,hauteur,taille,epaiss,GREEN);
+void Ninja::DeplacNinja(int dep,int Wh,int Ww){
+//        Si etat ninja = 20 ou 21 :
+    if (state==20){
+//            cas 20 : décaler ninja de qq pixels vers gauche
+        fillRect(coord, Wh-taille, epaiss, taille, WHITE);
+        ninja.setX(max(coord-dep, 0));
+        fillRect(coord, Wh-taille, epaiss, taille, RED);
     }
-    if (state==1){
-        fillRect(180-taille, hauteur,taille,epaiss,GREEN);
-    }
-    if (state>=20){
-        fillRect(coord,hauteur,epaiss,taille,GREEN);
-    }
-}
-
-void Ninja::EffaceNinja(){
-    if (state==0){
-        fillRect(20,hauteur,taille,epaiss,WHITE);
-    }
-    if (state==1){
-        fillRect(180-taille, hauteur,taille,epaiss,WHITE);
-    }
-    if (state>=20){
-        fillRect(coord,hauteur,epaiss,taille,WHITE);
+    else if (state==21){
+//            cas 21 : ............................... droite
+        fillRect(coord, Wh-taille, epaiss, taille, WHITE);
+        ninja.setX(max(coord+dep, 0));
+        fillRect(coord, Wh-taille, epaiss, taille, RED);
     }
 }
 
-int Ninja::getState(){
-    return state;
-}
-
-int Ninja::getX(){
-    return coord;
+void Ninja::ActuStat(int Ww,int key){
+//  Si etat ninja = 20 ou 21 :
+          if (state==20){
+              if (coord+epaiss>=Ww)
+                  state = 0;
+          }
+          else if (state==21){
+              if (coord+epaiss>=Ww)
+                  state = 1;
+          }
+//        Sinon si touche espace et Ninja à gauche(0) :
+          else if (key==SPACEBAR && state==0)
+//            Etat ninja = 21 (transition vers droite)
+              state = 21;
+          else if (key==SPACEBAR && state==1)
+//        Sinon si touche espace et Ninja à droite(1) :
+              state = 20;
+//            Etat Ninja = 20 (transition vers gauche)
+      }
 }
 
 int Ninja::width(){

@@ -12,8 +12,6 @@ public :
     Ninja(int x, int s);
 
     //Accesseurs
-    int getX();
-    int getState();    
     int width();
     int height();
     bool getShield();
@@ -24,7 +22,7 @@ public :
     void setShield(bool s);
 
     //Methodes
-    bool isAlive();    
-    void AffichNinja();
-    void EffaceNinja();
+    bool isAlive();
+    void DeplacNinja(int dep,int Wh,int Ww);
+    void ActuStat(int Ww,int key);
 };
